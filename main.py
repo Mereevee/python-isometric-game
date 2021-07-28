@@ -8,6 +8,10 @@ from colors import Colors
 from spritesheet import Spritesheet
 from screenshot import Screenshot
 
+with open("resources/maps/map.json") as mapJson:
+    map = json.load(mapJson)
+    mapJson.close()
+
 pygame.init()
 pygame.font.init()
 
@@ -15,19 +19,14 @@ Settings = Settings(60, 640, 480)
 Colors = Colors()
 Screenshot = Screenshot()
 screen = pygame.display.set_mode((Settings.width, Settings.height))
-Minimap = Minimap(screen, Colors.BLUE, 10, ("right", "up"))
-Spritesheet = Spritesheet('resources/images/spritesheet.png')
+Minimap = Minimap(screen, Colors.BLUE, 10, ("right", "up"), map, "resources/images/minimapSpritesheet.png")
+Spritesheet = Spritesheet("resources/images/spritesheet.png")
 
 sprites = Spritesheet.loadSprites()
-
 font = pygame.font.Font("resources/fonts/monogram.ttf", 31)
 debugText = font.render("Debug mode", False, Colors.WHITE)
 debug = False
 fpsClock = pygame.time.Clock()
-
-with open("resources/maps/map.json") as mapJson:
-    map = json.load(mapJson)
-    mapJson.close()
 
 # Game loop.
 while True:
@@ -71,7 +70,6 @@ while True:
 
     # Isometric Map
     rect = sprites[1].get_rect()
-    # for num1 in range(1):
     for layer in map["layers"]:
         a, b = 0, 0
         try:
@@ -79,7 +77,7 @@ while True:
         except:
             offset = 0
         for sprite in layer["data"]:
-            if a >= rect.width * layer["height"]:
+            if a == rect.width * layer["height"]:
                 a = 0
                 b += rect.height
             x = (((a / rect.width) * 0.5 * rect.width + (b / rect.height) * -0.5 * rect.width) - rect.width / 2) + Settings.width / 2
@@ -90,10 +88,9 @@ while True:
 
     # Minimap
     Minimap.render()
-    
+
     #teste fodase
-    xteste = 0
-    yteste = 0
+    xteste, yteste = 0, 0
     if debug:
         #spritesheet
         for sprite in sprites:
