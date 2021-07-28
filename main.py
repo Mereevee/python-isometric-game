@@ -72,20 +72,20 @@ while True:
     # Isometric Map
     rect = sprites[1].get_rect()
     # for num1 in range(1):
-    for num1 in range(len(map["layers"])):
+    for layer in map["layers"]:
         a, b = 0, 0
         try:
-            offset = map["layers"][num1]["offsety"]
+            offset = layer["offsety"]
         except:
             offset = 0
-        for num in map["layers"][num1]["data"]:
-            if a >= rect.width * map["layers"][num1]["height"]:
+        for sprite in layer["data"]:
+            if a >= rect.width * layer["height"]:
                 a = 0
                 b += rect.height
             x = (((a / rect.width) * 0.5 * rect.width + (b / rect.height) * -0.5 * rect.width) - rect.width / 2) + Settings.width / 2
             y = ((((a / rect.width) * 0.25 * rect.width + (b / rect.height) * 0.25 * rect.width) - (rect.height / 2) * 5) - (rect.height / 4) + offset) + Settings.height / 2
-            if num != 0:
-                screen.blit(sprites[num], (x, y))
+            if sprite != 0:
+                screen.blit(sprites[sprite], (x, y))
             a += rect.width
 
     # Minimap
