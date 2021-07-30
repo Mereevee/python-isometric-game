@@ -18,7 +18,7 @@ pygame.font.init()
 
 Settings = Settings(60, 640, 480)
 Colors = Colors()
-Screenshot = Screenshot()
+Screenshot = Screenshot("screenshots")
 screen = pygame.display.set_mode((Settings.width, Settings.height))
 Minimap = Minimap(screen, Colors.BLUE, 10, ("right", "up"), map, "resources/images/minimapSpritesheet.png")
 Spritesheet = Spritesheet("resources/images/spritesheet.png")
