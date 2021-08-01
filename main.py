@@ -9,6 +9,7 @@ from minimap import Minimap
 from colors import Colors
 from spritesheet import Spritesheet
 from screenshot import Screenshot
+from font import Font
 
 with open("resources/maps/map.json") as mapJson:
     map = json.load(mapJson)
@@ -27,8 +28,7 @@ Isometric = Isometric(screen, Settings, map)
 
 running = True
 sprites = Spritesheet.loadSprites()
-font = pygame.font.Font("resources/fonts/monogram.ttf", 31)
-debugText = font.render("Debug mode", False, Colors.WHITE)
+debugText = Font("Debug mode", Colors.WHITE)
 fpsClock = pygame.time.Clock()
 
 # Game loop.
@@ -66,7 +66,7 @@ while running:
                 Screenshot.Capture(screen, Settings.size)
     
     # Update.
-    fpsText = font.render("%.0f fps" % fpsClock.get_fps(), False, Colors.WHITE)
+    fpsText = Font(f"{fpsClock.get_fps():.0f} fps", Colors.WHITE)
 
     ## Draw.
     screen.fill(Colors.BLACK)
@@ -85,9 +85,10 @@ while running:
                 pygame.draw.rect(screen, Colors.PINK, (x + 1, y + 1, 30, 30))
                 screen.blit(sprite, (x, y))
                 x += 32
-        screen.blit(debugText, (0, Settings.height - debugText.get_rect().height))
-        screen.blit(fpsText, (Settings.width - fpsText.get_rect().width, Settings.height - fpsText.get_rect().height))
-    
+        screen.blit(debugText.render, (0, Settings.height - debugText.height))
+        screen.blit(fpsText.render, (0, Settings.height - fpsText.height - debugText.height))
+        screen.blit(mapText.render, (0, Settings.height - mapText.height - fpsText.height - debugText.height))
+
     pygame.display.flip()
     fpsClock.tick(Settings.fps)
 
