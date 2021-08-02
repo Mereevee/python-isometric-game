@@ -34,7 +34,6 @@ fpsClock = pygame.time.Clock()
 
 maps = []
 for map in Path("resources/maps").glob("*.json"):
-    print(str(map.name))
     maps.append(str(map.name))
 mapIndex = 0
 mapText = Font(maps[mapIndex], Colors.WHITE)
