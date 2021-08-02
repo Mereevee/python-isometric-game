@@ -12,7 +12,7 @@ class Player:
         self.screenWidth = screen.get_size()[0]
         self.screenHeight = screen.get_size()[1]
 
-        self.sprite = pygame.image.load("resources/images/wizzard.png").convert()
+        self.sprite = pygame.image.load("resources/images/player.png").convert()
         self.sprite.set_colorkey((255, 0, 255))
         self.rect = self.sprite.get_rect()
         self.minimapSprite = pygame.image.load("resources/images/minimapPlayer.png").convert()
