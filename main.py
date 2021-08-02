@@ -11,6 +11,7 @@ from colors import Colors
 from spritesheet import Spritesheet
 from screenshot import Screenshot
 from font import Font
+from player import Player
 
 with open("resources/maps/map.json") as mapJson:
     map = json.load(mapJson)
@@ -22,10 +23,11 @@ pygame.font.init()
 Settings = Settings(60, 640, 480)
 Colors = Colors()
 Screenshot = Screenshot("screenshots")
-screen = pygame.display.set_mode((Settings.width, Settings.height), pygame.SCALED)
+screen = pygame.display.set_mode((Settings.width, Settings.height))#, pygame.SCALED)
 Minimap = Minimap(screen, Colors.BLUE, 10, ("right", "up"), map, "resources/images/minimapSpritesheet.png")
 Spritesheet = Spritesheet("resources/images/spritesheet.png")
 Isometric = Isometric(screen, Settings, map)
+Player = Player(map, screen)
 
 running = True
 sprites = Spritesheet.loadSprites()
@@ -81,20 +83,39 @@ while running:
                     Settings.debug = True
             elif event.key == Settings.screenshotKey:
                 Screenshot.Capture(screen, Settings.size)
-    
+            elif event.key == pygame.K_RIGHT:
+                Player.right = False
+            elif event.key == pygame.K_LEFT:
+                Player.left = False
+            elif event.key == pygame.K_UP:
+                Player.up = False
+            elif event.key == pygame.K_DOWN:
+                Player.down = False
+        elif event.type == KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                Player.right = True
+            elif event.key == pygame.K_LEFT:
+                Player.left = True
+            elif event.key == pygame.K_UP:
+                Player.up = True
+            elif event.key == pygame.K_DOWN:
+                Player.down = True
+
     # Update.
+    Player.update()
     fpsText = Font(f"{fpsClock.get_fps():.0f} fps", Colors.WHITE)
 
-    ## Draw.
+    # Draw.
     screen.fill(Colors.BLACK)
 
     Isometric.render()
+    Player.render()
     Minimap.render()
 
     if Settings.debug:
         x, y = 0, 0
         for sprite in sprites:
-            if sprite != None:
+            if sprite is not None:
                 if x > Settings.width:
                     y += 32
                     x = 0
