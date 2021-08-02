@@ -1,6 +1,7 @@
 import sys
 import json
 import pygame
+from pathlib import Path
 from numpy import random
 from pygame.locals import *
 from settings import Settings
@@ -31,6 +32,13 @@ sprites = Spritesheet.loadSprites()
 debugText = Font("Debug mode", Colors.WHITE)
 fpsClock = pygame.time.Clock()
 
+maps = []
+for map in Path("resources/maps").glob("*.json"):
+    print(str(map.name))
+    maps.append(str(map.name))
+mapIndex = 0
+mapText = Font(maps[mapIndex], Colors.WHITE)
+
 # Game loop.
 while running:
     for event in pygame.event.get():
@@ -40,6 +48,16 @@ while running:
         elif event.type == KEYUP:
             if event.key == pygame.K_ESCAPE:
                 running = False
+            elif event.key == pygame.K_0 and pygame.key.get_mods() & pygame.KMOD_CTRL:
+                mapIndex += 1
+                if mapIndex + 1 > len(maps):
+                    mapIndex = 0                
+                with open(f"resources/maps/{maps[mapIndex]}") as mapJson:
+                    map = json.load(mapJson)
+                    mapJson.close()
+                Isometric.map = map
+                Minimap.map = map
+                mapText.set_render(maps[mapIndex])
             elif event.key == pygame.K_b:
                 if not Minimap.disabled:
                     if Minimap.dirX == "right":
