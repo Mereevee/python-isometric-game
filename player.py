@@ -15,6 +15,7 @@ class Player:
         self.sprite = pygame.image.load("resources/images/wizzard.png").convert()
         self.sprite.set_colorkey((255, 0, 255))
         self.rect = self.sprite.get_rect()
+        self.minimapSprite = pygame.image.load("resources/images/minimapPlayer.png").convert()
 
         self.x = 0
         self.y = 0

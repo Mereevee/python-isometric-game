@@ -4,7 +4,8 @@ from colors import Colors
 Colors = Colors()
 
 class Minimap:
-    def __init__(self, screen, color, offset, dir, map, filename):
+    def __init__(self, player, screen, color, offset, dir, map, filename):
+        self.player = player
         self.screen = screen
         self.color = color
         self.width = 100
@@ -75,3 +76,5 @@ class Minimap:
                     if sprite != 0:
                         self.screen.blit(minimapSprites[sprite], self.getSpritesPos((x, y)))
                     x += rect.width
+
+            self.screen.blit(self.player.minimapSprite, self.getSpritesPos((self.player.x / 4, self.player.y / 4)))

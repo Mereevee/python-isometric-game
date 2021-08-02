@@ -23,11 +23,11 @@ pygame.font.init()
 Settings = Settings(60, 640, 480)
 Colors = Colors()
 Screenshot = Screenshot("screenshots")
-screen = pygame.display.set_mode((Settings.width, Settings.height))#, pygame.SCALED)
-Minimap = Minimap(screen, Colors.BLUE, 10, ("right", "up"), map, "resources/images/minimapSpritesheet.png")
+screen = pygame.display.set_mode((Settings.width, Settings.height), pygame.SCALED)
 Spritesheet = Spritesheet("resources/images/spritesheet.png")
 Isometric = Isometric(screen, Settings, map)
 Player = Player(map, screen)
+Minimap = Minimap(Player, screen, Colors.BLUE, 10, ("right", "up"), map, "resources/images/minimapSpritesheet.png")
 
 running = True
 sprites = Spritesheet.loadSprites()
