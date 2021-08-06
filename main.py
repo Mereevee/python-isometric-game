@@ -7,7 +7,6 @@ from pygame.locals import *
 from settings import Settings
 from isometric import Isometric
 from minimap import Minimap
-from colors import Colors
 from spritesheet import Spritesheet
 from screenshot import Screenshot
 from font import Font
@@ -21,24 +20,23 @@ pygame.init()
 pygame.font.init()
 
 Settings = Settings(60, 640, 480)
-Colors = Colors()
 Screenshot = Screenshot("screenshots")
 screen = pygame.display.set_mode((Settings.width, Settings.height), pygame.SCALED)
 Spritesheet = Spritesheet("resources/images/spritesheet.png")
 Isometric = Isometric(screen, Settings, map)
 Player = Player(map, screen)
-Minimap = Minimap(Player, screen, Colors.BLUE, 10, ("right", "up"), map, "resources/images/minimapSpritesheet.png")
+Minimap = Minimap(Player, screen, "BLUE", 10, ("right", "up"), map, "resources/images/minimapSpritesheet.png")
 
 running = True
 sprites = Spritesheet.loadSprites()
-debugText = Font("Debug mode", Colors.WHITE)
+debugText = Font("Debug mode", "WHITE")
 fpsClock = pygame.time.Clock()
 
 maps = []
 for map in Path("resources/maps").glob("*.json"):
     maps.append(str(map.name))
 mapIndex = 0
-mapText = Font(maps[mapIndex], Colors.WHITE)
+mapText = Font(maps[mapIndex], "WHITE")
 
 # Game loop.
 while running:
@@ -103,10 +101,10 @@ while running:
 
     # Update.
     Player.update()
-    fpsText = Font(f"{fpsClock.get_fps():.0f} fps", Colors.WHITE)
+    fpsText = Font(f"{fpsClock.get_fps():.0f} fps", "WHITE")
 
     # Draw.
-    screen.fill(Colors.BLACK)
+    screen.fill("BLACK")
 
     Isometric.render()
     Player.render()
@@ -119,8 +117,8 @@ while running:
                 if x > Settings.width:
                     y += 32
                     x = 0
-                pygame.draw.rect(screen, Colors.PINKD, (x, y, 32, 32))
-                pygame.draw.rect(screen, Colors.PINK, (x + 1, y + 1, 30, 30))
+                pygame.draw.rect(screen, (194, 13 , 255), (x, y, 32, 32))
+                pygame.draw.rect(screen, (255, 0, 255), (x + 1, y + 1, 30, 30))
                 screen.blit(sprite, (x, y))
                 x += 32
         screen.blit(debugText.render, (0, Settings.height - debugText.height))

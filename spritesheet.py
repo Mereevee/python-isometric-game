@@ -1,7 +1,4 @@
 import pygame
-from colors import Colors
-
-Colors = Colors()
 
 class Spritesheet:
     def __init__(self, filename):
@@ -10,7 +7,7 @@ class Spritesheet:
 
     def getSprite(self, x, y, w, h):
         sprite = pygame.Surface((w, h))
-        sprite.set_colorkey(Colors.PINK)
+        sprite.set_colorkey((255, 0, 255))
         sprite.blit(self.sprite_sheet, (0, 0), (x, y, w, h))
         return sprite
 

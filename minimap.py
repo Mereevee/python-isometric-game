@@ -1,7 +1,4 @@
 import pygame
-from colors import Colors
-
-Colors = Colors()
 
 class Minimap:
     def __init__(self, player, screen, color, offset, dir, map, filename):
