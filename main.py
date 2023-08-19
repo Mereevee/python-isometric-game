@@ -47,8 +47,7 @@ while running:
                 running = False
             elif event.key == pygame.K_0 and pygame.key.get_mods() & pygame.KMOD_CTRL:
                 mapIndex += 1
-                if mapIndex + 1 > len(maps):
-                    mapIndex = 0                
+                mapIndex %= len(maps)
                 with open(f"resources/maps/{maps[mapIndex]}") as mapJson:
                     map = json.load(mapJson)
                     mapJson.close()
