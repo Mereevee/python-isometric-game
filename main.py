@@ -41,8 +41,7 @@ mapText = Font(maps[mapIndex], "WHITE")
 while running:
     for event in pygame.event.get():
         if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
+            running = False
         elif event.type == KEYUP:
             if event.key == pygame.K_ESCAPE:
                 running = False
