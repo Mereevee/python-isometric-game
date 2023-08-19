@@ -1,4 +1,3 @@
-venv
+env
 screenshots
 __pycache__
-.idea

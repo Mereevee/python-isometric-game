@@ -2,7 +2,6 @@ import sys
 import json
 import pygame
 from pathlib import Path
-from numpy import random
 from pygame.locals import *
 from settings import Settings
 from isometric import Isometric
